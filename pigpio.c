@@ -11076,7 +11076,14 @@ int bscXfer(bsc_xfer_t *xfer)
          active = bscsReg[BSC_FR] & (BSC_FR_RXBUSY | BSC_FR_TXBUSY);
       }
 
+      if (!active && (copied < xfer->txCnt))
+      {
+	 active = 1;
+      }
+
       if (active) myGpioSleep(0, 20);
+
+
    }
 
    bscFR = bscsReg[BSC_FR] & 0xffff;
